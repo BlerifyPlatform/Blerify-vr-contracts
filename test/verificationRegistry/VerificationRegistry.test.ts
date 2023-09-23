@@ -1,7 +1,7 @@
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { expect } from "chai";
 import { ethers, lacchain, network } from "hardhat";
-import { keccak256, toUtf8Bytes } from "ethers/lib/utils";
+import { keccak256, toUtf8Bytes, formatBytes32String } from "ethers/lib/utils";
 import { DIDRegistryGM } from "../../typechain-types";
 import { Wallet } from "ethers";
 import { defaultAbiCoder } from "ethers/lib/utils";
@@ -12,9 +12,8 @@ const [deployer, entity1, entity2, entity3] = lacchain.getSigners();
 let verificationRegistryAddress: string;
 let defaultDidRegistryInstance: DIDRegistryGM;
 const genericMessage = "some message";
-const didRegistryArtifactName = "DIDRegistry";
-const defaultDelegateType =
-  "0x0be0ff6b6d81f13f4d66a7dbb4cd4b6018141f5d65f53b245681255a1d2667f4";
+const didRegistryArtifactName = "DIDRegistryGM";
+const defaultDelegateType = formatBytes32String("sigAuth"); // bytes32 right padded
 const EIP712ContractName = "VerificationRegistry";
 describe(artifactName, function () {
   async function deployDidRegistry(
@@ -52,7 +51,7 @@ describe(artifactName, function () {
   });
 
   describe("Verification Registry", () => {
-    it("Should setright values on contract deployment", async function () {
+    it("Should set right values on contract deployment", async function () {
       const Artifact = await ethers.getContractFactory(artifactName, entity1);
       const ci = Artifact.attach(verificationRegistryAddress);
       expect(await ci.defaultDelegateType()).to.equal(defaultDelegateType);
