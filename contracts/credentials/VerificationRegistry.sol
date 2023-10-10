@@ -95,26 +95,26 @@ contract VerificationRegistry is
         Detail storage detail = registers[digest][by];
         require(detail.exp > exp || detail.exp == 0, "ER");
         detail.exp = exp;
+        detail.isRevoked = true;
+        if (detail.onHold) {
+            detail.onHold = false;
+        }
         emit NewRevocation(digest, by, detail.iat, exp);
     }
 
     function getDetails(
         address issuer,
         bytes32 digest
-    ) external view returns (uint256 iat, uint256 exp, bool onHold) {
+    )
+        external
+        view
+        returns (uint256 iat, uint256 exp, bool onHold, bool isRevoked)
+    {
         Detail memory detail = registers[digest][issuer];
         iat = detail.iat;
         exp = detail.exp;
         onHold = detail.onHold;
-    }
-
-    function isValidCredential(
-        address issuer,
-        bytes32 digest
-    ) external view returns (bool value) {
-        Detail memory detail = registers[digest][issuer];
-        uint256 exp = detail.exp;
-        value = !((exp < block.timestamp && exp > 0) || detail.onHold);
+        isRevoked = detail.isRevoked;
     }
 
     function issueByDelegate(

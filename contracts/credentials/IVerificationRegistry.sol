@@ -30,18 +30,10 @@ interface IVerificationRegistry {
     function getDetails(
         address issuer,
         bytes32 digest
-    ) external view returns (uint256 iat, uint256 exp, bool onHold);
-
-    /**
-     * Just valid relative to the information contained in the contract
-     * Validates "scenario 3" which means that data will be invalid when the expiration time has been reached by
-     * the current timestamp; this means that the data has just expired because of the time has passed or because
-     * the data has been revoked or because the data has been put on hold.
-     */
-    function isValidCredential(
-        address issuer,
-        bytes32 digest
-    ) external view returns (bool);
+    )
+        external
+        view
+        returns (uint256 iat, uint256 exp, bool onHold, bool isRevoked);
 
     /**
      * Optional way to register a data change. In this case the delegate sends the data on behalf of the main actor
@@ -161,8 +153,6 @@ interface IVerificationRegistry {
     /**
      * @dev OnHoldChange is a toggle that indicates the status of some data represented by a "digest". If "isOnHold" is true it indicates that the data is
      * in observation, so meanwhile that data should be taken into temporal status.
-     * If onHold is false it means a digest that was on observation finally ended that period. Now, the validity of that issue relative to the issuer "by" is
-     * up to offchain verification custom logic and whether the credential has not expired or revoked in this contract.
      */
     event NewOnHoldChange(
         bytes32 indexed digest,
@@ -175,15 +165,14 @@ interface IVerificationRegistry {
      * @param iat: date at which a data was issued
      * @param exp: date at which the data is expiring
      * @note:
-     scenario 1: iat == 0, means a data was never issued via this registry; otherwise issued
-     scenario 2: (iat > 0 && exp == 0) || (exp > current time) , means the data is still valid 
-     scenario 3: exp < current time && exp !=0, means the data has expired (invalid)
-     additionally:
-     scenario 3.1: iat == 0 && scenario 3: means a data was never issued but revoked (invalid)
+     scenario 1: iat > 0, means data was timestamped -> "exits"
+        scenario 1.1: iat > 0 && 0 < exp < currentTime -> "expired"
+     scenario 3: isRevoked -> data attestation has been "revoked"
      */
     struct Detail {
         uint256 iat;
         uint256 exp;
         bool onHold;
+        bool isRevoked;
     }
 }

@@ -377,6 +377,7 @@ async function issue(
   const q = await verificationRegistry.getDetails(sender.address, digest);
   expect(q.exp).to.equal(exp);
   expect(q.onHold).to.equal(false);
+  expect(q.isRevoked).to.equal(false);
 }
 
 async function revoke(
@@ -391,6 +392,9 @@ async function revoke(
   await expect(result)
     .to.emit(verificationRegistry, "NewRevocation")
     .withArgs(digest, sender.address, anyValue, anyValue);
+  const details = await verificationRegistry.getDetails(sender.address, digest);
+  expect(details.isRevoked).to.equal(true);
+  expect(details.exp).to.be.greaterThan(0);
 }
 
 async function toggletOnHold(
