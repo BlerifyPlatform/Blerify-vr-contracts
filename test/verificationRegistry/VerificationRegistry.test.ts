@@ -377,6 +377,7 @@ async function issue(
   const q = await verificationRegistry.getDetails(sender.address, digest);
   expect(q.exp).to.equal(exp);
   expect(q.onHold).to.equal(false);
+  expect(q.isRevoked).to.equal(false);
 }
 
 async function revoke(
@@ -391,6 +392,9 @@ async function revoke(
   await expect(result)
     .to.emit(verificationRegistry, "NewRevocation")
     .withArgs(digest, sender.address, anyValue, anyValue);
+  const details = await verificationRegistry.getDetails(sender.address, digest);
+  expect(details.isRevoked).to.equal(true);
+  expect(details.exp).to.be.greaterThan(0);
 }
 
 async function toggletOnHold(
@@ -777,7 +781,7 @@ async function getTypedDataHashForIssue(
   chainId = network.config.chainId
 ): Promise<{ typeDataHash: string; digest: string; exp: number }> {
   const ISSUE_TYPEHASH = keccak256(
-    toUtf8Bytes("Issue(bytes32 digest, uint256 exp, address identity)")
+    toUtf8Bytes("Issue(bytes32 digest,uint256 exp,address identity)")
   ); // OK -> 0xaaf414ba23a8cfcf004a7f75188441e59666f98d85447b5665cf04052d8e2bc3
 
   // 0. Build digest
@@ -824,7 +828,7 @@ async function getTypedDataHashForRevocation(
   message = "some message"
 ): Promise<{ typeDataHash: string; digest: string }> {
   const ISSUE_TYPEHASH = keccak256(
-    toUtf8Bytes("Revoke(bytes32 digest, address identity)")
+    toUtf8Bytes("Revoke(bytes32 digest,address identity)")
   );
   // 0. Build digest
   const digest = keccak256(toUtf8Bytes(message));

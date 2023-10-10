@@ -19,6 +19,7 @@ const config: HardhatUserConfig = {
         "<0xPrivateKey2>",
         "<0xPrivateKeyn>",
       ],
+      chainId: <CHAIN_ID_NUMBER>, // Update this accordingly
     },
   },
   gasReporter: {
