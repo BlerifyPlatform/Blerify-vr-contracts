@@ -23,9 +23,9 @@ contract VerificationRegistry is
     uint16 public constant version = 1;
     mapping(bytes32 => mapping(address => Detail)) private registers;
     bytes32 private constant REVOKE_TYPEHASH =
-        keccak256("Revoke(bytes32 digest, address identity)");
+        keccak256("Revoke(bytes32 digest,address identity)");
     bytes32 private constant ISSUE_TYPEHASH =
-        keccak256("Issue(bytes32 digest, uint256 exp, address identity)");
+        keccak256("Issue(bytes32 digest,uint256 exp,address identity)");
 
     function issue(bytes32 digest, uint256 exp, address identity) external {
         _validateController(getDidRegistry(identity), _msgSender(), identity);
