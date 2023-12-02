@@ -16,6 +16,5 @@ migrations Instance successfully deployed at address: 0xE74B710bCC51fE2B290b8653
 ## Deploying available contracts:
 
 ```sh
- yarn hardhat run --network lacchain scripts/deployDidRegistryRecoverable.ts # deploys DidRegistryRecoverable Smart Contract
  yarn hardhat run --network lacchain scripts/deployVerificationRegistry.ts # deploys Credential Registry Smart Contract
 ```
