@@ -1,7 +1,7 @@
 {
-  "name": "lacchain-base-smart-contracts",
+  "name": "lacchain-vr-contracts",
   "version": "1.0.0",
-  "description": "",
+  "description": "Verification Registry Smart Contracts",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

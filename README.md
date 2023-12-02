@@ -1,4 +1,4 @@
-# LACChain Base Smart Contracts
+# Verification Registry Smart Contracts
 
 ## Getting Started
 
@@ -9,7 +9,4 @@
 
 ## Contracts
 
-- [Did Registry](docs/functional/didRegistry.md)
 - [Verification Registry](docs/functional/verificationRegistry.md)
-
-## License
