@@ -4,12 +4,9 @@ pragma solidity 0.8.18;
 import "./BaseRelayRecipient.sol";
 import "./IIdentityHandler.sol";
 import "../utils/EIP712/EIP712.sol";
+import "@openzeppelin/contracts/utils/Context.sol";
 
-abstract contract IdentityHandler is
-    IIdentityHandler,
-    BaseRelayRecipient,
-    EIP712
-{
+abstract contract IdentityHandler is IIdentityHandler, Context, EIP712 {
     bytes32 public defaultDelegateType;
     address public defaultDidRegistry;
     mapping(address => address) public didRegistries;

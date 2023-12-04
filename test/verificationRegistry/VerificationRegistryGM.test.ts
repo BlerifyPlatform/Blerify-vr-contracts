@@ -7,7 +7,7 @@ import { Wallet } from "ethers";
 import { defaultAbiCoder } from "ethers/lib/utils";
 import { arrayify } from "@ethersproject/bytes";
 
-const artifactName = "VerificationRegistry";
+const artifactName = "VerificationRegistryGM";
 const [deployer, entity1, entity2, entity3] = lacchain.getSigners();
 let verificationRegistryAddress: string;
 let defaultDidRegistryInstance: DIDRegistryGM;
