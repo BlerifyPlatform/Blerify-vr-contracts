@@ -12,7 +12,7 @@ contract VerificationRegistry is IVerificationRegistry, IdentityHandler {
         bytes32 delegateType
     ) IdentityHandler(didRegistry, delegateType, "VerificationRegistry") {}
 
-    uint16 public constant version = 1;
+    uint16 public constant version = 2;
     mapping(bytes32 => mapping(address => Detail)) private registers;
     bytes32 private constant REVOKE_TYPEHASH =
         keccak256("Revoke(bytes32 digest,address identity)");
