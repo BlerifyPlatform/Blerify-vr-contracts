@@ -1,26 +1,18 @@
-//SPDX-License-Identifier: MIT
+//SPDX-License-Identifier: APACHE-2.0
 pragma solidity 0.8.18;
 
-import "../common/BaseRelayRecipient.sol";
-import "./IVerificationRegistry.sol";
+import "../IVerificationRegistry.sol";
 
-import "../common/IdentityHandler.sol";
+import "../../common/IdentityHandler.sol";
+import "@openzeppelin/contracts/utils/Context.sol";
 
-contract VerificationRegistry is
-    IVerificationRegistry,
-    BaseRelayRecipient,
-    IdentityHandler
-{
+contract VerificationRegistry is IVerificationRegistry, IdentityHandler {
     constructor(
-        address trustedForwarderAddress,
         address didRegistry,
         bytes32 delegateType
-    )
-        BaseRelayRecipient(trustedForwarderAddress)
-        IdentityHandler(didRegistry, delegateType, "VerificationRegistry")
-    {}
+    ) IdentityHandler(didRegistry, delegateType, "VerificationRegistry") {}
 
-    uint16 public constant version = 1;
+    uint16 public constant version = 2;
     mapping(bytes32 => mapping(address => Detail)) private registers;
     bytes32 private constant REVOKE_TYPEHASH =
         keccak256("Revoke(bytes32 digest,address identity)");
