@@ -1,4 +1,4 @@
-//SPDX-License-Identifier: APACHE-2.0
+// SPDX-License-Identifier: APACHE-2.0
 
 pragma solidity 0.8.18;
 
@@ -164,9 +164,10 @@ interface IVerificationRegistry {
     /**
      * @param iat: date at which a data was issued
      * @param exp: date at which the data is expiring
+     * @param OnHold: indicates whether the data is under observation
      * @note:
-     scenario 1: iat > 0, means data was timestamped -> "exits"
-        scenario 1.1: iat > 0 && 0 < exp < currentTime -> "expired"
+     scenario 1: !(iat = 0 && exp = 0 && onHold = false && isRevoked = false), means data "exists" given an issuer, a digest for the context of this contract.
+     scenario 2: iat > 0 && 0 < exp < currentTime -> "expired"
      scenario 3: isRevoked -> data attestation has been "revoked"
      */
     struct Detail {
