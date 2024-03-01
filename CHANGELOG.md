@@ -6,6 +6,10 @@
 - Creates Generic version of Verification Registry Smart contracts (Valid for any generic Ethereum Based Network)
 - Improves documentation
 
+#### Bug Fixes
+
+- Update BaseRelayRecipient to correctly resolve msg sender.
+
 ## 1.0.0
 
 - first version of verification registry contracts
@@ -13,4 +17,4 @@
 
 ### Additions and Improvements
 
-### Bug Fixes
+#### Bug Fixes
