@@ -15,8 +15,9 @@ abstract contract IdentityHandler is IIdentityHandler, Context, EIP712 {
     constructor(
         address didRegistry,
         bytes32 delegateType,
-        string memory name
-    ) EIP712(name, "1") {
+        string memory name,
+        string memory version
+    ) EIP712(name, version) {
         // version is expected to be updated if new version is released
         defaultDidRegistry = didRegistry;
         defaultDelegateType = delegateType;

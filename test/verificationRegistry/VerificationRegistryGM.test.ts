@@ -15,6 +15,7 @@ const genericMessage = "some message";
 const didRegistryArtifactName = "DIDRegistryGM";
 const defaultDelegateType = formatBytes32String("sigAuth"); // bytes32 right padded
 const EIP712ContractName = "VerificationRegistry";
+const contractVersion = "210";
 describe(artifactName, function () {
   async function deployDidRegistry(
     keyRotationTime = 3600
@@ -778,7 +779,8 @@ async function getTypedDataHashForIssue(
   contractName = EIP712ContractName,
   message = "some message",
   delta = 3600 * 24 * 365,
-  chainId = network.config.chainId
+  chainId = network.config.chainId,
+  version = contractVersion
 ): Promise<{ typeDataHash: string; digest: string; exp: number }> {
   const ISSUE_TYPEHASH = keccak256(
     toUtf8Bytes("Issue(bytes32 digest,uint256 exp,address identity)")
@@ -803,7 +805,7 @@ async function getTypedDataHashForIssue(
     )
   );
   const _hashedName = keccak256(toUtf8Bytes(contractName));
-  const _hashedVersion = keccak256(toUtf8Bytes("1"));
+  const _hashedVersion = keccak256(toUtf8Bytes(version));
 
   const contractAddress = verificationRegistryAddress;
   const eds = defaultAbiCoder.encode(
@@ -853,7 +855,7 @@ async function getTypedDataHashForRevocation(
 
 async function getDomainSeparator(
   contractName: string,
-  version = "1",
+  version = contractVersion,
   chainId = network.config.chainId
 ): Promise<string> {
   // 1. EIP712
