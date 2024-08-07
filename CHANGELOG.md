@@ -1,5 +1,10 @@
 # Changelog
 
+### 2.1.0
+
+- Fix: Use contract versions as part of EIP712 signatures
+- Refactor: Update version type from 'uint16' to 'string'
+
 ## 2.0.0
 
 - Set Contract License to Apache License, Version 2.0
