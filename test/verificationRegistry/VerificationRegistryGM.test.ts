@@ -15,7 +15,7 @@ const genericMessage = "some message";
 const didRegistryArtifactName = "DIDRegistryGM";
 const defaultDelegateType = formatBytes32String("sigAuth"); // bytes32 right padded
 const EIP712ContractName = "VerificationRegistry";
-const contractVersion = "210";
+const contractVersion = "009";
 describe(artifactName, function () {
   async function deployDidRegistry(
     keyRotationTime = 3600

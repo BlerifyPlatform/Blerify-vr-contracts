@@ -19,7 +19,7 @@ contract VerificationRegistry is IVerificationRegistry, IdentityHandler {
         )
     {}
 
-    string public constant version = "210"; // max value MUST BE 0xffff
+    string public constant version = "009"; // max value MUST BE 0xffff
     mapping(bytes32 => mapping(address => Detail)) private registers;
     bytes32 private constant REVOKE_TYPEHASH =
         keccak256("Revoke(bytes32 digest,address identity)");
